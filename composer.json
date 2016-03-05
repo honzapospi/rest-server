@@ -1,7 +1,6 @@
 {
   "name": "honzapospi/rest-server",
   "description" : "Restfull server in PHP",
-  "version": "1.0.1",
   "license": ["GNU-3.0"],
   "authors": [
     {

@@ -1,0 +1,11 @@
+{
+    "name": "teze/teze",
+    "description" : "Nette framework extension library",
+    "version": "2.2.1",
+    "autoload": {
+        "classmap": ["src/"]
+    },
+    "require": {
+        "leafo/lessphp": "0.4.0"
+    }
+}

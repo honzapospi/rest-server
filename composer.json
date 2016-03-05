@@ -1,7 +1,7 @@
 {
   "name": "honzapospi/rest-server",
   "description" : "Restfull server in PHP",
-  "license": ["GPL-2.0", "GNU-3.0"],
+  "license": ["MIT", "GPL-2.0", "GNU-3.0"],
   "authors": [
     {
       "name": "Jan Pospisil",

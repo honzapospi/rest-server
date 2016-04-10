@@ -34,7 +34,7 @@ class Parameters extends Object implements IParametrs {
 	}
 
 	public function post($key = NULL) {
-		if($this->contentType == 'application/json'){
+		if(Strings::substring($this->contentType, 0, 16) == 'application/json'){
 			$post = ArrayHash::from(json_decode(file_get_contents('php://input'), TRUE));
 			return isset($post[$key]) ? $post[$key] : null;
 		}

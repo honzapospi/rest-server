@@ -79,7 +79,7 @@ class Application extends \Nette\Object {
 		if($this->catchExceptions){
 			$response = $this->responseFactory->create();
 			$error = array(
-				'title' => $e->getMessage()
+				'message' => $e->getMessage()
 			);
 			$response->errors = array($error);
 			$response->setStatusCode($code);

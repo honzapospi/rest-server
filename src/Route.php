@@ -40,7 +40,7 @@ class Route extends \Nette\Object implements IRoute {
 	 * @return string ClassName is success, false otherwise.
 	 */
 	public function match($path, $method) {
-		if($this->method == self::ALL || $method == $this->method || ($method == self::OPTIONS && $this->method == self::POST)){
+		if($this->method == self::ALL || $method == $this->method || $method == self::OPTIONS){
 			if($this->pathPattern == '*'){
 				if($method == self::OPTIONS)
 					die('access');

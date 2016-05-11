@@ -13,10 +13,5 @@ namespace RestServer;
 
 interface IIdentity  {
 
-	/**
-	 * @return bool true if request is authenticated, false otherwise.
-	 */
-	public function isLoggedIn();
-
 	public function getId();
 }

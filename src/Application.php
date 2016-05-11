@@ -35,6 +35,12 @@ class Application extends \Nette\Object {
 	private $container;
 	private $renderer;
 
+	/**
+	 * Event executed just before run presenter
+	 * @var array
+	 */
+	public $onBeforeRun = array();
+
 	public $catchExceptions = TRUE;
 
 	public function __construct(IRouteListFactory $routeListFactory, Request $request, IResponseFactory $responseFactory, Container $container, IRenderer $renderer){
@@ -57,6 +63,7 @@ class Application extends \Nette\Object {
 				throw new ApplicationException('Class "' . $routeResponse['classname'] . '" must be instance of RestServer\IPresenter');
 			}
 			$response = $this->responseFactory->create();
+			$this->onBeforeRun($this, $instance, $routeResponse['pathParameters']);
 			$instance->run(new Parameters($this->request, $routeResponse['pathParameters']), $response);
 
 		} catch (BadRequestException $e){

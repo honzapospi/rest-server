@@ -59,8 +59,8 @@ class Application extends \Nette\Object {
 			if(!$routeResponse)
 				throw new BadRequestException('Unsupported '.$this->request->method.' request');
 			$instance = $this->container->getByType($routeResponse['classname']);
-			if(!$instance instanceof IPresenter) {
-				throw new ApplicationException('Class "' . $routeResponse['classname'] . '" must be instance of RestServer\IPresenter');
+			if(!$instance instanceof IController) {
+				throw new ApplicationException('Class "' . $routeResponse['classname'] . '" must be instance of RestServer\IController');
 			}
 			$response = $this->responseFactory->create();
 			$this->onBeforeRun($this, $instance, $routeResponse['pathParameters']);
@@ -88,7 +88,7 @@ class Application extends \Nette\Object {
 			$error = array(
 				'message' => $e->getMessage()
 			);
-			$response->errors = array($error);
+			$response->error = array($error);
 			$response->setStatusCode($code);
 			$this->renderer->send($response);
 		} else {

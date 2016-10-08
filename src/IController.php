@@ -12,7 +12,7 @@ use Nette\Http\Request;
  * @author Jan Pospisil
  */
 
-interface IPresenter  {
+interface IController  {
 	
 	public function run(IParametrs $parameters, Response $response);
 

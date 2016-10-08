@@ -22,6 +22,7 @@ class Route extends \Nette\Object implements IRoute {
 	const SPLITTER = '_______';
 
 	public function __construct($pathPattern, $method, $className){
+		$pathPattern = rtrim($pathPattern, '/');
 		$this->pathPattern = $pathPattern;
 		preg_match_all('#\<[a-zA-Z0-9]+\>#', $pathPattern, $matches);
 		$vars = $matches[0];
@@ -40,6 +41,7 @@ class Route extends \Nette\Object implements IRoute {
 	 * @return string ClassName is success, false otherwise.
 	 */
 	public function match($path, $method) {
+		$path = rtrim($path, '/');
 		if($this->method == self::ALL || $method == $this->method || $method == self::OPTIONS){
 			if($this->pathPattern == '*'){
 				if($method == self::OPTIONS)

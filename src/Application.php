@@ -55,6 +55,9 @@ class Application extends \Nette\Object {
 	public function run(){
 		try {
 			$path = substr($this->request->url->path, strlen($this->request->url->basePath) - 1);
+			// accept /?path=/endpoint AND index.php?path=/endpoint
+			if($path == '/' || $path == '/index.php' && $this->request->getQuery('path'))
+				$path = $this->request->getQuery('path');
 			$routeResponse = $this->routeList->match($path, $this->request->method);
 			if(!$routeResponse)
 				throw new BadRequestException('Unsupported '.$this->request->method.' request');

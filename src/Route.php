@@ -28,7 +28,7 @@ class Route extends \Nette\Object implements IRoute {
 		$vars = $matches[0];
 		$strtr = array();
 		foreach($vars as $var){
-			$strtr[$var] = '[a-zA-Z0-9]+';
+			$strtr[$var] = '[a-zA-Z0-9._]+';
 		}
 		$this->vars = $vars;
 		$this->regexp = strtr($pathPattern, $strtr);

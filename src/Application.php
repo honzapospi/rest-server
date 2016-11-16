@@ -61,7 +61,7 @@ class Application extends \Nette\Object {
 			$path = $path ? $path : '/';
 			$routeResponse = $this->routeList->match($path, $this->request->method);
 			if(!$routeResponse)
-				throw new BadRequestException('Unsupported '.$this->request->method.' '.$path.' request');
+				throw new BadRequestException('Unsupported '.$this->request->method.' "'.$path.'"" request');
 			$instance = $this->container->getByType($routeResponse['classname']);
 			if(!$instance instanceof IController) {
 				throw new ApplicationException('Class "' . $routeResponse['classname'] . '" must be instance of RestServer\IController');

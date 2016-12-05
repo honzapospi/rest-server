@@ -34,6 +34,7 @@ class Application extends \Nette\Object {
 	private $responseFactory;
 	private $container;
 	private $renderer;
+	private $parametersAccessor;
 
 	/**
 	 * Event executed just before run presenter
@@ -43,13 +44,14 @@ class Application extends \Nette\Object {
 
 	public $catchExceptions = TRUE;
 
-	public function __construct(IRouteListFactory $routeListFactory, Request $request, IResponseFactory $responseFactory, Container $container, IRenderer $renderer){
+	public function __construct(IRouteListFactory $routeListFactory, Request $request, IResponseFactory $responseFactory, Container $container, IRenderer $renderer, ParametersAccessor $parametersAccessor){
 		$this->routeList = $routeListFactory->create();
 		$this->request = $request;
 		$this->responseFactory = $responseFactory;
 		$this->container = $container;
 		$this->catchExceptions = Debugger::$productionMode;
 		$this->renderer = $renderer;
+		$this->parametersAccessor = $parametersAccessor;
 	}
 
 	public function run(){
@@ -68,7 +70,9 @@ class Application extends \Nette\Object {
 			}
 			$response = $this->responseFactory->create();
 			$this->onBeforeRun($this, $instance, $routeResponse['pathParameters']);
-			$instance->run(new Parameters($this->request, $routeResponse['pathParameters']), $response);
+			$parameters = new Parameters($this->request, $routeResponse['pathParameters']);
+			$this->parametersAccessor->set($parameters);
+			$instance->run($parameters, $response);
 
 		} catch (BadRequestException $e){
 			$this->renderException($e, 400);

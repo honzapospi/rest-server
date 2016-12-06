@@ -83,7 +83,6 @@ class Application extends \Nette\Object {
 		} catch (ForbiddenRequestException $e){
 			$this->renderException($e, 403);
 		} catch (\Exception $e){
-			//Debugger::log($e);
 			$this->renderException($e, 500);
 		}
 		return $this->renderer->send($response);
@@ -91,10 +90,12 @@ class Application extends \Nette\Object {
 
 	private function renderException(\Exception $e, $code){
 		Debugger::log($e->getMessage(), $code);
+		if($code >= 500)
+			Debugger::log($e);
 		if($this->catchExceptions){
 			$response = $this->responseFactory->create();
 			$error = array(
-				'message' => $e->getMessage()
+				'message' => $code < 500 ? $e->getMessage() : 'Internal server error.'
 			);
 			$response->error = array($error);
 			$response->setStatusCode($code);

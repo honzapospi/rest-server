@@ -43,7 +43,7 @@ class Response extends \Nette\Object {
 	}
 
 	public function getData(){
-		return $this->data = $this->data;
+		return $this->data;
 	}
 
 	public function __set($name, $value){

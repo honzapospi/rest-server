@@ -14,6 +14,6 @@ use Nette\Http\Request;
 
 interface IController  {
 	
-	public function run(IParametrs $parameters, Response $response);
+	public function run(IParameters $parameters, Response $response);
 
 }

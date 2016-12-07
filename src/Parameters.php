@@ -18,7 +18,7 @@ use Tracy\Debugger;
  * @author Jan Pospisil
  */
 
-class Parameters extends Object implements IParametrs {
+class Parameters extends Object implements IParameters {
 
 	/**
 	 * @var Request

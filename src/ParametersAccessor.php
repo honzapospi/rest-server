@@ -15,7 +15,7 @@ class ParametersAccessor extends \Nette\Object {
 
 	private $parameters;
 
-	public function set(IParametrs $parameters){
+	public function set(IParameters $parameters){
 		$this->parameters = $parameters;
 	}
 

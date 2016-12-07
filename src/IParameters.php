@@ -11,7 +11,7 @@ namespace RestServer;
  * @author Jan Pospisil
  */
 
-interface IParametrs  {
+interface IParameters  {
 
 	public function post($key = NULL);
 

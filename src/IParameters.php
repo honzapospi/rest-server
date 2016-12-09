@@ -13,11 +13,11 @@ namespace RestServer;
 
 interface IParameters  {
 
-	public function post($key = NULL);
+	public function post($key = NULL, $isRequired = FALSE);
 
 
-	public function get($key = NULL, $acceptPost = TRUE);
+	public function get($key = NULL, $isRequired = FALSE);
 
-	public function path($key);
+	public function path($key, $isRequired = FALSE);
 
 }

@@ -1,2 +1,5 @@
 .idea/
 *~
+tests/tmp
+composer.lock
+vendor

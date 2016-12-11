@@ -36,8 +36,11 @@ class Parameters extends Object implements IParameters {
 
 	public function post($key = NULL, $isRequired = FALSE) {
 		if(Strings::substring($this->contentType, 0, 16) == 'application/json'){
-			$post = ArrayHash::from(json_decode(file_get_contents('php://input'), TRUE));
-			$return = isset($post[$key]) ? $post[$key] : null;
+			$post = json_decode(file_get_contents('php://input'), TRUE);
+			if($key)
+				$return = isset($post[$key]) ? $post[$key] : null;
+			else
+				$return = $post;
 		} else
 			$return = $this->request->getPost($key);
 		if(!$return && $isRequired)

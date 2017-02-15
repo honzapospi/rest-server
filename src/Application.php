@@ -97,7 +97,7 @@ class Application extends \Nette\Object {
 			$error = array(
 				'message' => $code < 500 ? $e->getMessage() : 'Internal server error.'
 			);
-			$response->error = array($error);
+			$response->error = $error;
 			$response->setStatusCode($code);
 			$this->renderer->send($response);
 		} else {

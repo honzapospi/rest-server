@@ -19,6 +19,9 @@ class ParametersAccessor extends \Nette\Object {
 		$this->parameters = $parameters;
 	}
 
+	/**
+	 * @return IParameters
+	 */
 	public function get(){
 		return $this->parameters;
 	}

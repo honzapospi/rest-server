@@ -11,6 +11,8 @@ use Nette\Object;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\Json;
 use Nette\Utils\Strings;
+use Nette\Utils\Validators;
+use RestServer\Exceptions\InvalidParameterException;
 use RestServer\Exceptions\MissingRequiredParameterException;
 use Tracy\Debugger;
 
@@ -27,14 +29,16 @@ class Parameters extends Object implements IParameters {
 	private $request;
 	private $pathParameters;
 	private $contentType;
+	private $validator;
 
 	public function __construct(IRequest $request, array $pathParameters){
 		$this->request = $request;
 		$this->pathParameters = $pathParameters;
 		$this->contentType = isset($request->headers['content-type']) ? $request->headers['content-type'] : 'text/plain';
+		$this->validator = new Validator();
 	}
 
-	public function post($key = NULL, $isRequired = FALSE) {
+	public function post($key = NULL, $isRequired = FALSE, array $validators = array()) {
 		if(Strings::substring($this->contentType, 0, 16) == 'application/json'){
 			$post = json_decode(file_get_contents('php://input'), TRUE);
 			if($key)
@@ -43,22 +47,19 @@ class Parameters extends Object implements IParameters {
 				$return = $post;
 		} else
 			$return = $this->request->getPost($key);
-		if(!$return && $isRequired)
-			throw new MissingRequiredParameterException('Parameter "'.$key.'" is required.');
+		$return = $this->validator->validate($key, $isRequired, $validators, $return);
 		return $return;
 	}
 
-	public function get($key = NULL, $isRequired = FALSE){
+	public function get($key = NULL, $isRequired = FALSE, array $validators = array()){
 		$return = $this->request->getQuery($key);
-		if(!$return && $isRequired)
-			throw new MissingRequiredParameterException('Parameter "'.$key.'" is required.');
+		$return = $this->validator->validate($key, $isRequired, $validators, $return);
 		return $return;
 	}
 
-	public function path($name, $isRequired = FALSE){
+	public function path($name, $isRequired = FALSE, array $validators = array()){
 		$return = array_key_exists($name, $this->pathParameters) ? $this->pathParameters[$name] : null;
-		if(!$return && $isRequired)
-			throw new MissingRequiredParameterException('Parameter "'.$name.'" is required.');
+		$return = $this->validator->validate($name, $isRequired, $validators, $return);
 		return $return;
 	}
 

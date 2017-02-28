@@ -1,5 +1,9 @@
 <?php
 namespace RestServer;
+use Nette\Utils\Strings;
+use Nette\Utils\Validators;
+use RestServer\Exceptions\InvalidParameterException;
+use RestServer\Exceptions\MissingRequiredParameterException;
 
 /**
  * Copyright (c) Jan Pospisil (http://www.jan-pospisil.cz)
@@ -12,6 +16,8 @@ class Validator extends \Nette\Object {
 	public function validate($name, $isRequired, array $validators, $value){
 		if(!$value && $isRequired)
 			throw new MissingRequiredParameterException('Parameter "'.$name.'" is required.');
+		if(!$value && !$isRequired)
+			return null;
 		if(!$validators)
 			return $value;
 		if($value === null && !$isRequired)
@@ -26,11 +32,20 @@ class Validator extends \Nette\Object {
 					throw new InvalidParameterException('Parameter "'.$name.'" must be int.');
 				$value = (int) $value;
 			} elseif($validator == Check::LENGTH){
-				if(!Strings::length($value) != $validatorVal)
+				if(Strings::length($value) != $validatorVal)
 					throw new InvalidParameterException('Parameter "'.$name.'" must be exactly '.$validatorVal.' chars length.');
 			} elseif($validator == Check::MIN_LENGTH){
 				if(Strings::length($value) < $validatorVal)
 					throw new InvalidParameterException('Parameter "'.$name.'" must be at least '.$validatorVal.' chars length.');
+			} elseif($validator == Check::FLOAT){
+				$value = strtr($value, array(',' => '.'));
+				if(!Validators::isNumeric($value))
+					throw new InvalidParameterException('Parameter "'.$name.'" must be float.');
+				$value = (float) $value;
+			} elseif($validator == Check::BOOL){
+				if(!is_bool($value) && $value != 1 && $value != 0)
+					throw new InvalidParameterException('Parameter "'.$name.'" must be boolean.');
+				$value = (bool) $value;
 			}
 
 			else {

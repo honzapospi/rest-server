@@ -46,6 +46,10 @@ class Validator extends \Nette\Object {
 				if(!is_bool($value) && $value != 1 && $value != 0)
 					throw new InvalidParameterException('Parameter "'.$name.'" must be boolean.');
 				$value = (bool) $value;
+			} elseif($validator == Check::EMAIL){
+				if(!Validators::isEmail($value)){
+					throw new InvalidParameterException('Parameter "'.$name.'" must be email.');
+				}
 			}
 
 			else {

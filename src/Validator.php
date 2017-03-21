@@ -1,5 +1,6 @@
 <?php
 namespace RestServer;
+use Nette\Caching\Cache;
 use Nette\Utils\Strings;
 use Nette\Utils\Validators;
 use RestServer\Exceptions\InvalidParameterException;
@@ -50,6 +51,9 @@ class Validator extends \Nette\Object {
 				if(!Validators::isEmail($value)){
 					throw new InvalidParameterException('Parameter "'.$name.'" must be email.');
 				}
+			} elseif($validator == Check::IS_ARRAY){
+				if(!is_array($value))
+					throw new InvalidParameterException('Parameter "'.$name.'" is not array.');
 			}
 
 			else {

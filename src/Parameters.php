@@ -40,8 +40,13 @@ class Parameters extends Object implements IParameters {
 				$return = isset($post[$key]) ? $post[$key] : null;
 			else
 				$return = $post;
-		} else
-			$return = $this->request->getPost($key);
+		} else {
+			if($key)
+				$return = $this->request->getPost($key);
+			else
+				$return = $this->request->getPost();
+		}
+
 		$return = $this->validator->validate($key, $isRequired, $validators, $return);
 		return $return;
 	}

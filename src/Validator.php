@@ -15,7 +15,7 @@ use RestServer\Exceptions\MissingRequiredParameterException;
 class Validator extends \Nette\Object {
 
 	public function validate($name, $isRequired, array $validators, $value){
-		if(!$value === null && $isRequired)
+		if($value === null && $isRequired)
 			throw new MissingRequiredParameterException('Parameter "'.$name.'" is required.');
 		if(!$value && !$isRequired)
 			return $value;

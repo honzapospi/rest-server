@@ -21,7 +21,7 @@ class JsonRenderer extends \Nette\Object implements IRenderer{
 	}
 
 	public function send(Response $response) {
-		header('Content-Type: application/vnd.api+json');
+		header('Content-Type: application/json');
 		foreach($response->getHeaders() as $name => $value){
 			header($name.': '.$value);
 		}

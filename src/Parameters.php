@@ -51,6 +51,15 @@ class Parameters extends Object implements IParameters {
 		return $return;
 	}
 
+	public function file($key = null, $isRequired = FALSE, array $validators = array()){
+		if($key)
+			$return = $this->request->getFile($key);
+		else
+			$return = $this->request->getFiles();
+		$return = $this->validator->validate($key, $isRequired, $validators, $return);
+		return $return;
+	}
+
 	public function get($key = NULL, $isRequired = FALSE, array $validators = array()){
 		$return = $this->request->getQuery($key);
 		$return = $this->validator->validate($key, $isRequired, $validators, $return);

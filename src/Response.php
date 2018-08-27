@@ -1,10 +1,12 @@
 <?php
+declare(strict_types = 1);
 
 /**
  * Copyright (c) Jan Pospisil (http://www.jan-pospisil.cz)
  */
 
 namespace RestServer;
+use Nette\SmartObject;
 use Nette\Utils\ArrayHash;
 
 /**
@@ -14,7 +16,8 @@ use Nette\Utils\ArrayHash;
  * @property array $data
  */
 
-class Response extends \Nette\Object {
+class Response {
+	use SmartObject;
 
 	private $data = array();
 
@@ -26,11 +29,11 @@ class Response extends \Nette\Object {
 		$this->statusCode = $code;
 	}
 
-	public function getStatusCode(){
+	public function getStatusCode(): int{
 		return $this->statusCode;
 	}
 
-	public function setHeader($name, $value){
+	public function setHeader(string $name, $value){
 		$this->headers[$name] = $value;
 	}
 
@@ -38,7 +41,7 @@ class Response extends \Nette\Object {
 		return isset($this->headers[$name]) ? $this->headers[$name] : null;
 	}
 
-	public function getHeaders(){
+	public function getHeaders(): array {
 		return $this->headers;
 	}
 

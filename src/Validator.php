@@ -1,18 +1,25 @@
 <?php
+declare(strict_types = 1);
+
+/**
+ * Copyright (c) Jan Pospisil (http://www.jan-pospisil.cz)
+ */
+
 namespace RestServer;
 use Nette\Caching\Cache;
+use Nette\SmartObject;
 use Nette\Utils\Strings;
 use Nette\Utils\Validators;
 use RestServer\Exceptions\InvalidParameterException;
 use RestServer\Exceptions\MissingRequiredParameterException;
 
 /**
- * Copyright (c) Jan Pospisil (http://www.jan-pospisil.cz)
  * Validator
  * @author Jan Pospisil
  */
 
-class Validator extends \Nette\Object {
+class Validator {
+	use SmartObject;
 
 	public function validate($name, $isRequired, array $validators, $value){
 		if($value === null && $isRequired)

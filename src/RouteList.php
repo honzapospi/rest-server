@@ -1,10 +1,12 @@
 <?php
+declare(strict_types = 1);
 
 /**
  * Copyright (c) Jan Pospisil (http://www.jan-pospisil.cz)
  */
 
 namespace RestServer;
+use Nette\SmartObject;
 use Traversable;
 
 /**
@@ -12,7 +14,8 @@ use Traversable;
  * @author Jan Pospisil
  */
 
-class RouteList extends \Nette\Object implements IRoute, \IteratorAggregate{
+class RouteList implements IRoute, \IteratorAggregate{
+	use SmartObject;
 
 	private $routes;
 
@@ -20,7 +23,7 @@ class RouteList extends \Nette\Object implements IRoute, \IteratorAggregate{
 		$this->routes[] = $route;
 	}
 
-	public function match($path, $method){
+	public function match(string $path, string $method){
 		foreach($this->routes as $route){
 			if($response = $route->match($path, $method)){
 				return $response;

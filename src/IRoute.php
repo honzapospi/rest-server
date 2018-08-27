@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 /**
  * Copyright (c) Jan Pospisil (http://www.jan-pospisil.cz)
@@ -24,6 +25,6 @@ interface IRoute {
 	 * @param $path
 	 * @return string ClassName is success, false otherwise.
 	 */
-	public function match($path, $method);
+	public function match(string $path,string $method);
 
 }

@@ -1,10 +1,13 @@
 <?php
+declare(strict_types=1);
 
 /**
  * Copyright (c) Jan Pospisil (http://www.jan-pospisil.cz)
  */
 
 namespace RestServer;
+
+use Nette\SmartObject;
 use RestServer\Exceptions\ApplicationException;
 use Nette\Http\Request;
 use Nette\DI\Container;
@@ -26,8 +29,9 @@ use Tracy\Debugger;
  *
  * @author Jan Pospisil
  */
-
-class Application extends \Nette\Object {
+class Application
+{
+	use SmartObject;
 
 	private $routeList;
 	private $request;
@@ -44,7 +48,8 @@ class Application extends \Nette\Object {
 
 	public $catchExceptions = TRUE;
 
-	public function __construct(IRouteListFactory $routeListFactory, Request $request, IResponseFactory $responseFactory, Container $container, IRenderer $renderer, ParametersAccessor $parametersAccessor){
+	public function __construct(IRouteListFactory $routeListFactory, Request $request, IResponseFactory $responseFactory, Container $container, IRenderer $renderer, ParametersAccessor $parametersAccessor)
+	{
 		$this->routeList = $routeListFactory->create();
 		$this->request = $request;
 		$this->responseFactory = $responseFactory;
@@ -54,18 +59,19 @@ class Application extends \Nette\Object {
 		$this->parametersAccessor = $parametersAccessor;
 	}
 
-	public function run(){
+	public function run()
+	{
 		try {
 			$path = substr($this->request->url->path, strlen($this->request->url->basePath) - 1);
 			// accept /?path=/endpoint AND index.php?path=/endpoint
-			if($path == '/' || $path == '/index.php' && $this->request->getQuery('path'))
+			if ($path == '/' || $path == '/index.php' && $this->request->getQuery('path'))
 				$path = $this->request->getQuery('path');
 			$path = $path ? $path : '/';
 			$routeResponse = $this->routeList->match($path, $this->request->method);
-			if(!$routeResponse)
-				throw new BadRequestException('Unsupported '.$this->request->method.' '.$path.' request');
+			if (!$routeResponse)
+				throw new BadRequestException('Unsupported ' . $this->request->method . ' ' . $path . ' request');
 			$instance = $this->container->getByType($routeResponse['classname']);
-			if(!$instance instanceof IController) {
+			if (!$instance instanceof IController) {
 				throw new ApplicationException('Class "' . $routeResponse['classname'] . '" must be instance of RestServer\IController');
 			}
 			$response = $this->responseFactory->create();
@@ -74,25 +80,26 @@ class Application extends \Nette\Object {
 			$this->parametersAccessor->set($parameters);
 			$instance->run($parameters, $response);
 
-		} catch (BadRequestException $e){
+		} catch (BadRequestException $e) {
 			$this->renderException($e, 400);
-		} catch (AuthenticationException $e){
+		} catch (AuthenticationException $e) {
 			$this->renderException($e, 401);
-		} catch (DataException $e){
+		} catch (DataException $e) {
 			$this->renderException($e, 404);
-		} catch (ForbiddenRequestException $e){
+		} catch (ForbiddenRequestException $e) {
 			$this->renderException($e, 403);
-		} catch (\Exception $e){
+		} catch (\Exception $e) {
 			$this->renderException($e, 500);
 		}
 		return $this->renderer->send($response);
 	}
 
-	private function renderException(\Exception $e, $code){
+	private function renderException(\Exception $e, int $code)
+	{
 		Debugger::log($e->getMessage(), $code);
-		if($code >= 500)
+		if ($code >= 500)
 			Debugger::log($e);
-		if($this->catchExceptions){
+		if ($this->catchExceptions) {
 			$response = $this->responseFactory->create();
 			$error = array(
 				'message' => $code < 500 ? $e->getMessage() : 'Internal server error.'

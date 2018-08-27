@@ -1,10 +1,12 @@
 <?php
+declare(strict_types = 1);
 
 /**
  * Copyright (c) Jan Pospisil (http://www.jan-pospisil.cz)
  */
 
 namespace RestServer;
+use Nette\SmartObject;
 use Nette\Utils\Strings;
 
 /**
@@ -12,7 +14,8 @@ use Nette\Utils\Strings;
  * @author Jan Pospisil
  */
 
-class Route extends \Nette\Object implements IRoute {
+class Route implements IRoute {
+	use SmartObject;
 
 	private $pathPattern;
 	private $regexp;
@@ -40,7 +43,7 @@ class Route extends \Nette\Object implements IRoute {
 	 * @param $path
 	 * @return string ClassName is success, false otherwise.
 	 */
-	public function match($path, $method) {
+	public function match(string $path, string $method) {
 		$path = rtrim($path, '/');
 		if($this->method == self::ALL || $method == $this->method || $method == self::OPTIONS){
 			if($this->pathPattern == '*'){
@@ -61,7 +64,11 @@ class Route extends \Nette\Object implements IRoute {
 		}
 	}
 
-	public function getPath(){
+	/**
+	 * Get current path
+	 * @return string
+	 */
+	public function getPath(): string{
 		return $this->pathPattern;
 	}
 
@@ -77,11 +84,18 @@ class Route extends \Nette\Object implements IRoute {
 		return $return;
 	}
 
-	public function getMethod(){
+	/**
+	 * @return string GET|POST|PUT|DELETE|OPTIONS
+	 */
+	public function getMethod(): string {
 		return $this->method;
 	}
 
-	public function getClassName(){
+	/**
+	 * Return className
+	 * @return string
+	 */
+	public function getClassName(): string{
 		return $this->className;
 	}
 }

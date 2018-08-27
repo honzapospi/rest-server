@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 /**
  * Copyright (c) Jan Pospisil (http://www.jan-pospisil.cz)
@@ -15,7 +16,7 @@ use Nette\Utils\Strings;
 
 class ControllersExtension extends CompilerExtension {
 
-	public function loadConfiguration(){
+	public function loadConfiguration() {
 		$builder = $this->getContainerBuilder();
 		$config = $this->getConfig();
 		foreach($config as $name => $className){

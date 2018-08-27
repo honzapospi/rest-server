@@ -1,18 +1,20 @@
 <?php
+declare(strict_types = 1);
 
 /**
  * Copyright (c) Jan Pospisil (http://www.jan-pospisil.cz)
  */
 
 namespace RestServer;
-use Tracy\Debugger;
+use Nette\SmartObject;
 
 /**
  * JsonRenderer
  * @author Jan Pospisil
  */
 
-class JsonRenderer extends \Nette\Object implements IRenderer{
+class JsonRenderer implements IRenderer{
+	use SmartObject;
 
 	private $httpResponse;
 

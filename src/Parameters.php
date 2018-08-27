@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 /**
  * Copyright (c) Jan Pospisil (http://www.jan-pospisil.cz)
@@ -7,7 +8,7 @@
 namespace RestServer;
 use Nette\Http\IRequest;
 use Nette\Http\Request;
-use Nette\Object;
+use Nette\SmartObject;
 use Nette\Utils\Strings;
 
 
@@ -16,7 +17,8 @@ use Nette\Utils\Strings;
  * @author Jan Pospisil
  */
 
-class Parameters extends Object implements IParameters {
+class Parameters implements IParameters {
+	use SmartObject;
 
 	/**
 	 * @var Request

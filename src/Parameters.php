@@ -35,7 +35,7 @@ class Parameters implements IParameters {
 		$this->validator = new Validator();
 	}
 
-	public function post($key = NULL, $isRequired = FALSE, array $validators = array()) {
+	public function post($key = NULL, $isRequired = FALSE, array $validators = []) {
 		if(Strings::substring($this->contentType, 0, 16) == 'application/json'){
 			$post = json_decode(file_get_contents('php://input'), TRUE);
 			if($key)
@@ -53,7 +53,7 @@ class Parameters implements IParameters {
 		return $return;
 	}
 
-	public function file($key = null, $isRequired = FALSE, array $validators = array()){
+	public function file($key = null, $isRequired = FALSE, array $validators = []){
 		if($key)
 			$return = $this->request->getFile($key);
 		else
@@ -62,13 +62,13 @@ class Parameters implements IParameters {
 		return $return;
 	}
 
-	public function get($key = NULL, $isRequired = FALSE, array $validators = array()){
+	public function get($key = NULL, $isRequired = FALSE, array $validators = []){
 		$return = $this->request->getQuery($key);
 		$return = $this->validator->validate($key, $isRequired, $validators, $return);
 		return $return;
 	}
 
-	public function path($name, $isRequired = FALSE, array $validators = array()){
+	public function path($name, $isRequired = FALSE, array $validators = []){
 		$return = array_key_exists($name, $this->pathParameters) ? $this->pathParameters[$name] : null;
 		$return = $this->validator->validate($name, $isRequired, $validators, $return);
 		return $return;

@@ -13,7 +13,11 @@ namespace RestServer;
  */
 
 interface IRouteListFactory  {
-	
-	public function create();
+
+	/**
+	 * Create new RoutList
+	 * @return mixed
+	 */
+	public function create(): RouteList;
 
 }

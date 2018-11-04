@@ -59,7 +59,7 @@ class Application
 		$this->parametersAccessor = $parametersAccessor;
 	}
 
-	public function run()
+	public function run():void
 	{
 		try {
 			$path = substr($this->request->url->path, strlen($this->request->url->basePath) - 1);
@@ -91,10 +91,10 @@ class Application
 		} catch (\Exception $e) {
 			$this->renderException($e, 500);
 		}
-		return $this->renderer->send($response);
+		$this->renderer->send($response);
 	}
 
-	private function renderException(\Exception $e, int $code)
+	private function renderException(\Exception $e, int $code): void
 	{
 		Debugger::log($e->getMessage(), $code);
 		if ($code >= 500)

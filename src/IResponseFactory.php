@@ -17,6 +17,6 @@ interface IResponseFactory  {
 	/**
 	 * @return Response
 	 */
-	public function create();
+	public function create(): Response;
 	
 }

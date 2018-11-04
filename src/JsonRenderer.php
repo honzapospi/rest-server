@@ -22,13 +22,13 @@ class JsonRenderer implements IRenderer{
 		$this->httpResponse = $response;
 	}
 
-	public function send(Response $response) {
+	public function send(Response $response):void {
 		header('Content-Type: application/json');
 		foreach($response->getHeaders() as $name => $value){
 			header($name.': '.$value);
 		}
 		http_response_code($response->getStatusCode());
-		$data = json_encode($response->data);
+		$data = json_encode($response->getData());
 		echo $data;
 		die();
 	}

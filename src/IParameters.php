@@ -14,12 +14,12 @@ namespace RestServer;
 
 interface IParameters  {
 
-	public function post($key = NULL, $isRequired = FALSE, array $validators = null);
+	public function post($key = NULL, $isRequired = FALSE, array $validators = []);
 
-	public function file($key = NULL, $isRequired = FALSE, array $validators = null);
+	public function file($key = NULL, $isRequired = FALSE, array $validators = []);
 
-	public function get($key = NULL, $isRequired = FALSE, array $validators = null);
+	public function get($key = NULL, $isRequired = FALSE, array $validators = []);
 
-	public function path($key, $isRequired = FALSE, array $validators = null);
+	public function path($key, $isRequired = FALSE, array $validators = []);
 
 }

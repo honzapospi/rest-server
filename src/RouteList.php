@@ -19,7 +19,7 @@ class RouteList implements IRoute, \IteratorAggregate{
 
 	private $routes;
 
-	public function add(Route $route){
+	public function add(Route $route): void {
 		$this->routes[] = $route;
 	}
 
@@ -41,5 +41,31 @@ class RouteList implements IRoute, \IteratorAggregate{
 	 */
 	public function getIterator() {
 		return new \ArrayIterator($this->routes);
+	}
+
+	/************************************************* SHORTERS *******************************************************/
+
+	public function get(string $path, string $className) {
+		$this->add(new Route($path, Route::GET, $className));
+	}
+
+	public function post(string $path, string $className){
+		$this->add(new Route($path, Route::POST, $className));
+	}
+
+	public function put(string $path, string $className){
+		$this->add(new Route($path, Route::PUT, $className));
+	}
+
+	public function delete(string $path, string $className){
+		$this->add(new Route($path, Route::DELETE, $className));
+	}
+
+	public function all(string $path, string $className){
+		$this->add(new Route($path, Route::ALL, $className));
+	}
+
+	public function options(string $path, string $className){
+		$this->add(new Route($path, Route::OPTIONS, $className));
 	}
 }

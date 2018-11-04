@@ -22,7 +22,6 @@ class Route implements IRoute {
 	private $method;
 	private $className;
 	private $vars;
-	const SPLITTER = '_______';
 
 	public function __construct($pathPattern, $method, $className){
 		$pathPattern = rtrim($pathPattern, '/');
@@ -46,7 +45,7 @@ class Route implements IRoute {
 	public function match(string $path, string $method) {
 		$path = rtrim($path, '/');
 		if($this->method == self::ALL || $method == $this->method || $method == self::OPTIONS){
-			if($this->pathPattern == '*'){
+			if($this->pathPattern === '*'){
 				if($method == self::OPTIONS)
 					die('access');
 				return array(
@@ -72,7 +71,7 @@ class Route implements IRoute {
 		return $this->pathPattern;
 	}
 
-	private function getPathParameters($path){
+	private function getPathParameters($path): array{
 		$parts = explode('/', $path);
 		$parts2 = explode('/', $this->pathPattern);
 		$return = array();

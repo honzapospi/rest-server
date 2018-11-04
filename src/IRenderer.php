@@ -14,6 +14,6 @@ namespace RestServer;
 
 interface IRenderer {
 
-	public function send(Response $response);
+	public function send(Response $response): void;
 
 }

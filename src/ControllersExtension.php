@@ -16,7 +16,7 @@ use Nette\Utils\Strings;
 
 class ControllersExtension extends CompilerExtension {
 
-	public function loadConfiguration() {
+	public function loadConfiguration(): void {
 		$builder = $this->getContainerBuilder();
 		$config = $this->getConfig();
 		foreach($config as $name => $className){

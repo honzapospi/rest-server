@@ -1,4 +1,5 @@
 {
+  "version": "2.4.2",
   "name": "honzapospi/rest-server",
   "description" : "Restfull server in PHP",
   "license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
@@ -15,6 +16,7 @@
     "php": ">= 7.1",
     "nette/utils": "^2.4",
     "nette/http": "^2.4"
+    "nette/di": "^2.4"
   },
   "require-dev": {
     "nette/tester": "^2.0"

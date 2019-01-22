@@ -1,5 +1,5 @@
 {
-  "version": "2.4.2",
+  "version": "2.4.3",
   "name": "honzapospi/rest-server",
   "description" : "Restfull server in PHP",
   "license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
